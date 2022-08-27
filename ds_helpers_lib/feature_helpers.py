@@ -28,3 +28,38 @@ def mean_encode_feature(input_df: pd.DataFrame, category: str, target: str, smoo
 
     # Apply transformation and return
     return output
+
+# TODO: add  wrapper fxn 
+def mean_encode_cat_feats(input_df, feature_columns, target_col, smoothing_param, model_object=None):
+    '''Wrapper function to target encode a list of categorical feats'''
+
+    temp_df = input_df.copy()
+
+    # If no model given just map values
+    if model_object:
+
+        # Iterate through categorical columns and apply mapping
+        for i in feature_columns:
+            feature_encoding = model_object[i]['mean_encoding_map']
+            temp_df[i] = temp_df[i].map(feature_encoding)
+
+        # Return encoded df
+        return temp_df
+    
+    # Else iteratively build encoding map and append to cat feat map    
+    else:
+        cat_feat_map = {}
+
+        for j in feature_columns:
+            me_object = mean_encode_feature(input_df, j, target_col, smoothing_param)
+            me_map = me_object['mean_encoding_map']
+            temp_df[j] = me_object['mean_encoded_values']
+
+            # Update feature map with mappings for this feature
+            cat_feat_map[i] = me_map
+        
+        return temp_df, cat_feat_map
+        
+
+
+# TODO: add linear dt fxn

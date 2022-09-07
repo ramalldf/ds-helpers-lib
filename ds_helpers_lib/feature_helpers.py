@@ -73,5 +73,27 @@ class MeanEncoder:
         return temp_df
         
 
+def get_group_dummies(input_df, feature_list, group_column):
+
+    '''Gets the dummies for columns in feature_list, but groups
+    them for all members of a group so result is binary (eg. if
+    group member saw the same event twice, it will only show up
+    as a binary 1 to keep table consistent).
+    '''
+
+    # Copy original df
+    temp_df = input_df.copy()
+
+    temp_df = pd.get_dummies(temp_df, columns=feature_list)
+
+    # Group by an id column
+    temp_agg = temp_df.groupby(group_column).sum()
+
+    # Now change any values greater than 1 to 1
+    tem_agg[temp_agg > 1] = 1
+
+    return temp_agg
+    
+
 
 # TODO: add linear dt fxn

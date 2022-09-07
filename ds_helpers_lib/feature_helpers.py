@@ -90,7 +90,7 @@ def get_group_dummies(input_df, feature_list, group_column):
     temp_agg = temp_df.groupby(group_column).sum()
 
     # Now change any values greater than 1 to 1
-    tem_agg[temp_agg > 1] = 1
+    temp_agg[temp_agg > 1] = 1
 
     return temp_agg
     

@@ -2,21 +2,24 @@ import  numpy  as  np
 import  matplotlib.pyplot as plt
 import seaborn as sns
 
-def plot_pairs(df, target_col, one_vs_all=False):
+def plot_pairs(input_df, target_col, grid_col_num):
     '''Use Seaborn to plot the relationships between feat cols against one
-    another. Can use target column to separate classes by hue'''
+    target column. Define number of columns in plot grid with grid_col_num'''
     
-    if one_vs_all is False:
-        # Use pairplot and set the hue to be our class
-        sns.pairplot(df, hue=target_col) 
-
-        # Show the plot
-        plt.show()
+    # Define dimensions of grid
+    feat_cols_only = input_df.drop(target_col, axis=1).columns
+    n_cols = grid_col_num
+    n_rows = len(feat_cols_only)//n_cols
+    print(len(feat_cols_only), n_rows)
     
-    else:
-        sns.pairplot(df, y_vars=target_col, x_vars=df.drop(target_col, axis=1).columns)
-        plt.show()
-
+    # Split feats list into sublists to match grid dimensions
+    splits = np.array_split(feat_cols_only, n_rows)
+    splits = splits[::-1]
+    
+    # Plot pair based on these target and sublists of features
+    for i in splits:
+        sns.pairplot(input_df, y_vars=target_col, x_vars=i)
+    
 
 
 def scatter_boxplot(my_df, xlabels, ylabels, title, fig_size= [10,6]):

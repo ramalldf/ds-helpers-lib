@@ -1,4 +1,5 @@
-# Import seaborn
+import  numpy  as  np
+import  matplotlib.pyplot as plt
 import seaborn as sns
 
 def plot_pairs(df, target_col, one_vs_all=False):
@@ -17,3 +18,17 @@ def plot_pairs(df, target_col, one_vs_all=False):
         plt.show()
 
 
+
+def scatter_boxplot(my_df, xlabels, ylabels, title, fig_size= [10,6]):
+    '''Style formatting for boxplots'''
+
+    plt.subplots(1,1, figsize=fig_size, facecolor='white')
+    plt.style.use('fivethirtyeight')
+    sns.boxplot(data=my_df, saturation= 0.2)
+    sns.stripplot(data=my_df, jitter=True, size= 8.5, linewidth= 1, edgecolor= 'black')
+    plt.xlabel(xlabels, fontsize=20, fontweight='bold')
+    plt.xticks(fontsize=16, fontstyle='italic')
+    plt.ylabel(ylabels, fontweight='bold', fontsize=20)
+    plt.yticks(fontsize=16, fontstyle='italic')
+    plt.title(title, fontweight= 'bold', fontstyle='italic', fontsize=24)
+    plt.grid(color='white')

@@ -35,3 +35,33 @@ def scatter_boxplot(my_df, xlabels, ylabels, title, fig_size= [10,6]):
     plt.yticks(fontsize=16, fontstyle='italic')
     plt.title(title, fontweight= 'bold', fontstyle='italic', fontsize=24)
     plt.grid(color='white')
+
+
+def plot_cumulative_gains(actual, prob_pred, return_coords=False):
+    '''Builds a cumulative gains curve and compares it that of random 
+    and optimal model curves'''
+
+    # Init in a dataframe to simplify some operations
+    temp = pd.DataFrame(list(zip(actual, prob_pred)), columns=['actual', 'pred'])
+    temp = temp.sort_values(by='pred', ascending=False)
+    temp['rank'] = np.array(range(len(temp))) +1
+  
+    # Create optimal column which pushes positives to the top of the ranked list
+    temp['optimal'] = 0
+    print('actual', sum(actual))
+    temp.loc[temp['rank']<sum(actual)+1, 'optimal'] = 1
+
+    # Add cumulative sum columns for 
+    temp['cumsum_pred'] = temp['actual'].cumsum()
+    temp['cumsum_optimal'] = temp['optimal'].cumsum()
+
+
+    plt.plot(temp['rank'].values, temp['cumsum_pred'])
+    plt.plot(temp['rank'].values, temp['cumsum_optimal'])
+    plt.plot([1,len(actual)],[0, sum(actual)], 'k--')
+
+    plt.xlabel('Rank')
+    plt.ylabel('Cumulative Total')
+    
+    if return_coords:
+        return temp

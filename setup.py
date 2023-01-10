@@ -3,7 +3,7 @@ import pkg_resources
 from setuptools import setup
 
 setup(
-    name='ds_helpers_lib',
+    name='ds_helpers',
     version='0.1.0',
     author='',
     description="This is a helper's library for data exploration and ML workflows",

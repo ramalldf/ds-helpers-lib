@@ -35,3 +35,39 @@ def scatter_boxplot(my_df, xlabels, ylabels, title, fig_size= [10,6]):
     plt.yticks(fontsize=16, fontstyle='italic')
     plt.title(title, fontweight= 'bold', fontstyle='italic', fontsize=24)
     plt.grid(color='white')
+
+
+def plot_cumulative_gains(actual, prob_pred, return_plot_table=False):
+    '''Builds a cumulative gains curve and compares it that of random 
+        and optimal model curves'''
+
+    # Init in a dataframe to simplify some operations
+    temp = pd.DataFrame(list(zip(actual, prob_pred)), columns=['actual', 'pred'])
+    temp = temp.sort_values(by='pred', ascending=False)
+    temp['rank'] = np.array(range(len(temp))) +1
+    
+    # Create optimal column which pushes positives to the top of the ranked list
+    temp['optimal'] = 0
+    temp.loc[temp['rank']<sum(actual)+1, 'optimal'] = 1
+
+    # Add cumulative sum columns for 
+    temp['cumsum_pred'] = temp['actual'].cumsum()
+    temp['cumsum_optimal'] = temp['optimal'].cumsum()
+
+    # Calculate AUC ratio (predictions/optimal)
+    auc_optimal = auc(cumgain_df['rank'].values, cumgain_df['cumsum_optimal'].values)
+    auc_pred = auc(cumgain_df['rank'].values, cumgain_df['cumsum_pred'].values)
+    error_rate = round(1-(auc_pred/auc_optimal),3)
+    print('Error rate (1 - (AUC pred / AUC optimal)): ', error_rate)
+
+    plt.plot([1,len(actual)],[0, sum(actual)], 'k--')
+    plt.plot(temp['rank'].values, temp['cumsum_optimal'])
+    plt.plot(temp['rank'].values, temp['cumsum_pred'])
+
+    plt.xlabel('Rank')
+    plt.ylabel('Cumulative Total')
+    plt.title('Cumulative Gains of Prediction Model')
+    plt.legend(['Random', 'Optimal', 'Predicted'])
+    
+    if return_plot_table:
+        return temp

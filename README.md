@@ -7,7 +7,7 @@ This is a library that contains some helper functions and classes to make it eas
 
 You can install the library locally with the following command:
 
-`pip install git+https://github.com/ramalldf/ds-helpers-lib.git`
+`pip install git+https://github.com/ramalldf/ds-helpers.git`
 
-Then verify that ds-helpers-lib was installed with `pip freeze` 
+Then verify that ds-helpers was installed with `pip freeze` 
 

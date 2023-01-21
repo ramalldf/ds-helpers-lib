@@ -14,5 +14,7 @@ setup(
                       "pandas==1.3.5",
                       "pytest==7.2.0",
                       "scikit-learn",
-                      "seaborn"]
+                      "seaborn"],
+    include_package_data=True,
+    package_data={'': ['data/*.csv']
 )

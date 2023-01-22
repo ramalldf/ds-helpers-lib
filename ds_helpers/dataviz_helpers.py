@@ -87,7 +87,7 @@ def plot_calibration_curve(actual, prob_pred, n_quantiles=10):
 
     # Place values in a Dataframe to build quantiles and aggregate
     temp = pd.DataFrame(list(zip(actual, prob_pred)), columns=['actual', 'prediction'])
-    temp['pred_bin'] = pd.qcut(temp['pred_scaled'], n_quantiles, bin_labels)
+    temp['pred_bin'] = pd.qcut(temp['prediction'], n_quantiles, bin_labels)
 
     # Aggregate true and pred_scaled by bins
     aggregate = temp.groupby('pred_bin').agg({'actual': 'mean', 'prediction': 'mean'}).reset_index()
@@ -102,12 +102,11 @@ def plot_calibration_curve(actual, prob_pred, n_quantiles=10):
 
     plt.plot([0,control_max], [0,control_max], 'k--')
     plt.scatter(aggregate['predicted'], aggregate['actual'])
-    plt.scatter(aggregate['actual_noisy'], aggregate['actual'])
     
     plt.xlabel('Predicted', fontweight='bold', fontsize=20)
     plt.ylabel('Actual', fontweight='bold', fontsize=20)
     plt.title('Calibration of Prediction Model', fontweight= 'bold', fontstyle='italic', fontsize=24)
     plt.xticks(fontsize=16, fontstyle='italic')
     plt.yticks(fontsize=16, fontstyle='italic')
-    plt.legend(['Random', 'Optimal', 'Predicted'])
+    plt.legend(['Optimal', 'Predicted'])
     plt.tight_layout()

@@ -16,5 +16,5 @@ setup(
                       "scikit-learn",
                       "seaborn"],
     include_package_data=True,
-    package_data={'': ['data/*.csv']
+    package_data={'': ['data/*.csv']}
 )

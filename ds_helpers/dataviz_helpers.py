@@ -1,6 +1,8 @@
+import pandas as pd
 import  numpy  as  np
 import  matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.metrics import auc
 
 def plot_pairs(input_df, target_col, grid_col_num):
     '''Use Seaborn to plot the relationships between feat cols against one
@@ -55,19 +57,24 @@ def plot_cumulative_gains(actual, prob_pred, return_plot_table=False):
     temp['cumsum_optimal'] = temp['optimal'].cumsum()
 
     # Calculate AUC ratio (predictions/optimal)
-    auc_optimal = auc(cumgain_df['rank'].values, cumgain_df['cumsum_optimal'].values)
-    auc_pred = auc(cumgain_df['rank'].values, cumgain_df['cumsum_pred'].values)
+    auc_optimal = auc(temp['rank'].values, temp['cumsum_optimal'].values)
+    auc_pred = auc(temp['rank'].values, temp['cumsum_pred'].values)
     error_rate = round(1-(auc_pred/auc_optimal),3)
     print('Error rate (1 - (AUC pred / AUC optimal)): ', error_rate)
 
+    plt.subplots(1,1, figsize=[10, 6], facecolor='white')
+    plt.style.use('fivethirtyeight')
     plt.plot([1,len(actual)],[0, sum(actual)], 'k--')
     plt.plot(temp['rank'].values, temp['cumsum_optimal'])
     plt.plot(temp['rank'].values, temp['cumsum_pred'])
 
-    plt.xlabel('Rank')
-    plt.ylabel('Cumulative Total')
-    plt.title('Cumulative Gains of Prediction Model')
+    plt.xlabel('Rank', fontweight='bold', fontsize=20)
+    plt.ylabel('Cumulative Total', fontweight='bold', fontsize=20)
+    plt.title('Cumulative Gains of Prediction Model', fontweight= 'bold', fontstyle='italic', fontsize=24)
+    plt.xticks(fontsize=16, fontstyle='italic')
+    plt.yticks(fontsize=16, fontstyle='italic')
     plt.legend(['Random', 'Optimal', 'Predicted'])
+    plt.tight_layout()
     
     if return_plot_table:
         return temp

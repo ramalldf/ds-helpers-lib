@@ -74,6 +74,7 @@ def plot_cumulative_gains(actual, prob_pred, return_plot_table=False):
     plt.xticks(fontsize=16, fontstyle='italic')
     plt.yticks(fontsize=16, fontstyle='italic')
     plt.legend(['Random', 'Optimal', 'Predicted'])
+    plt.tight_layout()
     
     if return_plot_table:
         return temp

@@ -33,6 +33,7 @@ data.head(3)
 plot_cumulative_gains(data['actual'], data['prediction'])
 >>>Error rate (1 - (AUC pred / AUC optimal)):  0.163
 
-
-
 ```
+
+![roc_curves](ds_helpers/data/cumulative_gains_curve.png)
+

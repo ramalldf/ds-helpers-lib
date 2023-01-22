@@ -103,6 +103,8 @@ def plot_calibration_curve(actual, prob_pred, n_quantiles=10):
     plt.plot([0,control_max], [0,control_max], 'k--')
     plt.scatter(aggregate['predicted'], aggregate['actual'])
     
+    plt.xlim([0, control_max])
+    plt.ylim([0, control_max])
     plt.xlabel('Predicted', fontweight='bold', fontsize=20)
     plt.ylabel('Actual', fontweight='bold', fontsize=20)
     plt.title('Calibration of Prediction Model', fontweight= 'bold', fontstyle='italic', fontsize=24)

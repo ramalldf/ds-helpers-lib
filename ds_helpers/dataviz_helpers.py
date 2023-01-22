@@ -94,7 +94,7 @@ def plot_calibration_curve(actual, prob_pred, n_quantiles=10):
     aggregate.columns = ['bin', 'actual', 'predicted']
 
     # Define point for control model
-    control_max = aggregate['actual'].max()
+    control_max = np.mean(aggregate['actual'].max(), aggregate['predicted'].max())
 
     # Plot
     plt.subplots(1,1, figsize=[10, 6], facecolor='white')

@@ -72,7 +72,6 @@ def plot_cumulative_gains(actual, prob_pred, return_plot_table=False):
     plt.ylabel('Cumulative Total', fontweight='bold', fontsize=20)
     plt.title('Cumulative Gains of Prediction Model', fontweight= 'bold', fontstyle='italic', fontsize=24)
     plt.xticks(fontsize=16, fontstyle='italic')
-    plt.ylabel(ylabels, fontweight='bold', fontsize=20)
     plt.yticks(fontsize=16, fontstyle='italic')
     plt.legend(['Random', 'Optimal', 'Predicted'])
     

@@ -79,7 +79,7 @@ def plot_cumulative_gains(actual, prob_pred, return_plot_table=False):
     if return_plot_table:
         return temp
 
-def plot_calibration_curve(actual, prob_pred, n_quantiles=10):
+def plot_calibration_curve(actual, prob_pred, n_quantiles=10, fixed_axes_limits=False):
     '''Function will bin prediction probabilities into n_quantiles'''
 
     # Define labels
@@ -103,8 +103,11 @@ def plot_calibration_curve(actual, prob_pred, n_quantiles=10):
     plt.plot([0,control_max], [0,control_max], 'k--')
     plt.scatter(aggregate['predicted'], aggregate['actual'])
     
-    plt.xlim([0, control_max])
-    plt.ylim([0, control_max])
+    # Keep limits symmetrical based on control_max value
+    if fixed_axes_limits:
+        plt.xlim([0, control_max])
+        plt.ylim([0, control_max])
+
     plt.xlabel('Predicted', fontweight='bold', fontsize=20)
     plt.ylabel('Actual', fontweight='bold', fontsize=20)
     plt.title('Calibration of Prediction Model', fontweight= 'bold', fontstyle='italic', fontsize=24)

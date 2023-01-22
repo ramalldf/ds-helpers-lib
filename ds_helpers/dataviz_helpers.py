@@ -62,13 +62,18 @@ def plot_cumulative_gains(actual, prob_pred, return_plot_table=False):
     error_rate = round(1-(auc_pred/auc_optimal),3)
     print('Error rate (1 - (AUC pred / AUC optimal)): ', error_rate)
 
+    plt.subplots(1,1, figsize=fig_size, facecolor='white')
+    plt.style.use('fivethirtyeight')
     plt.plot([1,len(actual)],[0, sum(actual)], 'k--')
     plt.plot(temp['rank'].values, temp['cumsum_optimal'])
     plt.plot(temp['rank'].values, temp['cumsum_pred'])
 
-    plt.xlabel('Rank')
-    plt.ylabel('Cumulative Total')
-    plt.title('Cumulative Gains of Prediction Model')
+    plt.xlabel('Rank', fontweight='bold', fontsize=20)
+    plt.ylabel('Cumulative Total', fontweight='bold', fontsize=20)
+    plt.title('Cumulative Gains of Prediction Model', fontweight= 'bold', fontstyle='italic', fontsize=24)
+    plt.xticks(fontsize=16, fontstyle='italic')
+    plt.ylabel(ylabels, fontweight='bold', fontsize=20)
+    plt.yticks(fontsize=16, fontstyle='italic')
     plt.legend(['Random', 'Optimal', 'Predicted'])
     
     if return_plot_table:

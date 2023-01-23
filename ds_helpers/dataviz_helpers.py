@@ -91,7 +91,7 @@ def plot_calibration_curve(actual, prob_pred, n_quantiles=10, fixed_axes_limits=
     temp['pred_bin'] = pd.qcut(temp['prediction'], n_quantiles, bin_labels)
 
     # Calculate Brier score
-    brier_score = brier_score_loss(temp['actual'], temp['prediction']), 3)
+    brier_score = round(brier_score_loss(temp['actual'], temp['prediction']), 3)
 
     # Aggregate true and pred_scaled by bins
     aggregate = temp.groupby('pred_bin').agg({'actual': 'mean', 'prediction': 'mean'}).reset_index()

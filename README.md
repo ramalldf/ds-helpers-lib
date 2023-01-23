@@ -35,5 +35,14 @@ plot_cumulative_gains(data['actual'], data['prediction'])
 
 ```
 
-![roc_curves](ds_helpers/data/cumulative_gains_curve.png)
+![cumgains_curve](ds_helpers/data/cumulative_gains_curve.png)
 
+## Plot Calibration Curve
+```
+from ds_helpers.dataviz_helpers import plot_calibration_curve
+
+plot_calibration_curve(data['actual'], data['prediction'])
+>>>Brier score:  0.028
+```
+
+![cal_curve](ds_helpers/data/calibration_curve.png)

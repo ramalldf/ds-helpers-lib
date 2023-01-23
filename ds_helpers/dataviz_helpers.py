@@ -2,7 +2,8 @@ import pandas as pd
 import  numpy  as  np
 import  matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import auc
+from sklearn.metrics import auc, brier_score_loss
+
 
 def plot_pairs(input_df, target_col, grid_col_num):
     '''Use Seaborn to plot the relationships between feat cols against one
@@ -89,12 +90,17 @@ def plot_calibration_curve(actual, prob_pred, n_quantiles=10, fixed_axes_limits=
     temp = pd.DataFrame(list(zip(actual, prob_pred)), columns=['actual', 'prediction'])
     temp['pred_bin'] = pd.qcut(temp['prediction'], n_quantiles, bin_labels)
 
+    # Calculate Brier score
+    brier_score = brier_score_loss(temp['actual'], temp['prediction']), 3)
+
     # Aggregate true and pred_scaled by bins
     aggregate = temp.groupby('pred_bin').agg({'actual': 'mean', 'prediction': 'mean'}).reset_index()
     aggregate.columns = ['bin', 'actual', 'predicted']
 
     # Define point for control model
     control_max = (aggregate['actual'].max() + aggregate['predicted'].max())/2
+
+    print('Brier score: ', brier_score)
 
     # Plot
     plt.subplots(1,1, figsize=[10, 6], facecolor='white')

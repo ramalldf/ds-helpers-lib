@@ -2,7 +2,8 @@ import pandas as pd
 import  numpy  as  np
 import  matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import auc
+from sklearn.metrics import auc, brier_score_loss
+
 
 def plot_pairs(input_df, target_col, grid_col_num):
     '''Use Seaborn to plot the relationships between feat cols against one
@@ -78,3 +79,45 @@ def plot_cumulative_gains(actual, prob_pred, return_plot_table=False):
     
     if return_plot_table:
         return temp
+
+def plot_calibration_curve(actual, prob_pred, n_quantiles=10, fixed_axes_limits=False):
+    '''Function will bin prediction probabilities into n_quantiles'''
+
+    # Define labels
+    bin_labels = list(range(n_quantiles))
+
+    # Place values in a Dataframe to build quantiles and aggregate
+    temp = pd.DataFrame(list(zip(actual, prob_pred)), columns=['actual', 'prediction'])
+    temp['pred_bin'] = pd.qcut(temp['prediction'], n_quantiles, bin_labels)
+
+    # Calculate Brier score
+    brier_score = round(brier_score_loss(temp['actual'], temp['prediction']), 3)
+
+    # Aggregate true and pred_scaled by bins
+    aggregate = temp.groupby('pred_bin').agg({'actual': 'mean', 'prediction': 'mean'}).reset_index()
+    aggregate.columns = ['bin', 'actual', 'predicted']
+
+    # Define point for control model
+    control_max = (aggregate['actual'].max() + aggregate['predicted'].max())/2
+
+    print('Brier score: ', brier_score)
+
+    # Plot
+    plt.subplots(1,1, figsize=[10, 6], facecolor='white')
+    plt.style.use('fivethirtyeight')
+
+    plt.plot([0,control_max], [0,control_max], 'k--')
+    plt.scatter(aggregate['predicted'], aggregate['actual'])
+    
+    # Keep limits symmetrical based on control_max value
+    if fixed_axes_limits:
+        plt.xlim([0, control_max])
+        plt.ylim([0, control_max])
+
+    plt.xlabel('Predicted', fontweight='bold', fontsize=20)
+    plt.ylabel('Actual', fontweight='bold', fontsize=20)
+    plt.title('Calibration of Prediction Model', fontweight= 'bold', fontstyle='italic', fontsize=24)
+    plt.xticks(fontsize=16, fontstyle='italic')
+    plt.yticks(fontsize=16, fontstyle='italic')
+    plt.legend(['Optimal', 'Predicted'])
+    plt.tight_layout()

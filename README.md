@@ -13,6 +13,29 @@ Then verify that ds-helpers was installed with `pip freeze`
 
 
 ## Examples
+### Plot Features Against Target
+
+```Python
+import pandas as pd
+from sklearn.datasets import fetch_openml
+from sklearn.model_selection import train_test_split
+from ds_helpers.dataviz_helpers import plot_pairs
+
+# Load and extract sample data
+raw = fetch_openml(data_id=42165, as_frame=True)
+data = pd.DataFrame(raw['data'], columns=raw['feature_names'])
+data['sales_price'] = raw['target']
+
+# Keep a subset of columns to plot
+my_feats = ['LotArea', 'LotFrontage', 'Street', 'MoSold', 'YrSold', 'TotalBsmtSF', 'OpenPorchSF', 'GarageArea', 'SaleType', 'sales_price']
+clean = data[my_feats]
+
+# Plot pairs
+grid_col_num = 3
+plot_pairs(clean, 'sales_price', grid_col_num)
+
+```
+
 ### Mean-Encode Categorical Features
 
 ```Python

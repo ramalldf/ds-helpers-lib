@@ -9,7 +9,7 @@ def plot_pairs(input_df, target_col, grid_col_num):
     '''Use Seaborn to plot the relationships between feat cols against one
     target column. Define number of columns in plot grid with grid_col_num'''
     
-    plt.subplots(1,1, figsize=fig_size, facecolor='white')
+    plt.subplots(1,1, figsize=[10,6], facecolor='white')
     plt.style.use('fivethirtyeight')
     
     # Define dimensions of grid

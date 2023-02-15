@@ -1,9 +1,5 @@
 from pkg_resources import resource_stream
 from matplotlib import pyplot as plt
-from matplotlib import rcParams
-from cycler import cycler
-from ds_helpers.data.style_params import style_dict
-
 import pandas as pd
 
 def load_classifier_predictions():
@@ -19,5 +15,5 @@ def load_classifier_predictions():
 def load_mpl_style():
     '''Updates plotting style'''
 
-    # Update style using predefined values
-    rcParams.update(style_dict)
+    # Load stylesheet
+    plt.style.use('ds_helpers.data.stylesheet')

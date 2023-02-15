@@ -15,7 +15,6 @@ def plot_pairs(input_df, target_col, grid_col_num):
     feat_cols_only = input_df.drop(target_col, axis=1).columns
     n_cols = grid_col_num
     n_rows = len(feat_cols_only)//n_cols
-    print(len(feat_cols_only), n_rows)
     
     # Split feats list into sublists to match grid dimensions
     splits = np.array_split(feat_cols_only, n_rows)
@@ -23,7 +22,8 @@ def plot_pairs(input_df, target_col, grid_col_num):
     
     # Plot pair based on these target and sublists of features
     for i in splits:
-        sns.pairplot(input_df, y_vars=target_col, x_vars=i)
+        sns.pairplot(input_df, y_vars=target_col, x_vars=i, 
+                     plot_kws=dict(alpha=0.4, edgecolor=None))
     
 
 

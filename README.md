@@ -11,18 +11,26 @@ You can install the library locally with the following command:
 
 Then verify that ds-helpers was installed with `pip freeze` 
 
-
 ## Examples
-### Plot Features Against Target
-
 ```Python
+# Load auxilary libraries for example
 import pandas as pd
 from sklearn.datasets import fetch_openml
 from sklearn.model_selection import train_test_split
-from ds_helpers.dataviz_helpers import plot_pairs
 
 # Load and extract sample data
 raw = fetch_openml(data_id=42165, as_frame=True)
+
+```
+
+### Plot Features Against Target
+```Python
+from ds_helpers.dataviz_helpers import plot_pairs, load_mpl_style
+
+# Apply custom style
+load_mpl_style()
+
+# Assemble data
 data = pd.DataFrame(raw['data'], columns=raw['feature_names'])
 data['sales_price'] = raw['target']
 
@@ -31,21 +39,22 @@ my_feats = ['LotArea', 'LotFrontage', 'Street', 'MoSold', 'YrSold', 'TotalBsmtSF
 clean = data[my_feats]
 
 # Plot pairs
-grid_col_num = 3
+grid_col_num = 4
 plot_pairs(clean, 'sales_price', grid_col_num)
 
 ```
 
+![cal_curve](ds_helpers/data/scatter_pairs.png)
+(Jupyter notebook screenshot)
+
+
+
 ### Mean-Encode Categorical Features
 
 ```Python
-import pandas as pd
-from sklearn.datasets import fetch_openml
-from sklearn.model_selection import train_test_split
 from ds_helpers.feature_helpers import MeanEncoder
 
 # Load and extract sample data
-raw = fetch_openml(data_id=42165, as_frame=True)
 data = pd.DataFrame(raw['data'], columns=raw['feature_names'])
 data['sales_price'] = raw['target']
 
@@ -95,6 +104,7 @@ print(train_encoded.head(3))
 # 638      NaN  172676.782          NaN      0.0  179059.378  180273.728  176309.194     177045.741      85000.0
 
 ```
+
 
 You can now proceed to fill NA's and scale your data for training.
 

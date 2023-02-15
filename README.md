@@ -1,3 +1,5 @@
+![example workflow](https://github.com/ramalldf/ds-helpers/actions/workflows/python-package.yml/badge.svg)
+
 # DS-Helpers
 
 This is a library that contains some helper functions and classes to make it easier to visualize data and build machine learning pipelines.

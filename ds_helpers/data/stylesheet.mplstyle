@@ -1,6 +1,6 @@
 # Adapted from FiveThirtyEight style sheet
 
-lines.linewidth: 4
+lines.linewidth: 3
 lines.solid_capstyle: butt
 
 legend.fancybox: true
@@ -12,7 +12,8 @@ axes.axisbelow: true
 axes.grid: true
 axes.edgecolor: f0f0f0
 axes.linewidth: 3.0
-axes.titlesize: x-large
+axes.titlesize: 45
+axes.labelsize: 18
 
 patch.edgecolor: f0f0f0
 patch.linewidth: 0.5

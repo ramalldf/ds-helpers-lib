@@ -10,7 +10,6 @@ def plot_pairs(input_df, target_col, grid_col_num):
     target column. Define number of columns in plot grid with grid_col_num'''
     
     plt.subplots(1,1, figsize=[10,6], facecolor='white')
-    plt.style.use('fivethirtyeight')
     
     # Define dimensions of grid
     feat_cols_only = input_df.drop(target_col, axis=1).columns
@@ -32,7 +31,6 @@ def scatter_boxplot(my_df, xlabels, ylabels, title, fig_size= [10,6]):
     '''Style formatting for boxplots'''
 
     plt.subplots(1,1, figsize=fig_size, facecolor='white')
-    plt.style.use('fivethirtyeight')
     sns.boxplot(data=my_df, saturation= 0.2)
     sns.stripplot(data=my_df, jitter=True, size= 8.5, linewidth= 1, edgecolor= 'black')
     plt.xlabel(xlabels, fontsize=20, fontweight='bold')
@@ -67,7 +65,6 @@ def plot_cumulative_gains(actual, prob_pred, return_plot_table=False):
     print('Error rate (1 - (AUC pred / AUC optimal)): ', error_rate)
 
     plt.subplots(1,1, figsize=[10, 6], facecolor='white')
-    plt.style.use('fivethirtyeight')
     plt.plot([1,len(actual)],[0, sum(actual)], 'k--')
     plt.plot(temp['rank'].values, temp['cumsum_optimal'])
     plt.plot(temp['rank'].values, temp['cumsum_pred'])
@@ -107,7 +104,6 @@ def plot_calibration_curve(actual, prob_pred, n_quantiles=10, fixed_axes_limits=
 
     # Plot
     plt.subplots(1,1, figsize=[10, 6], facecolor='white')
-    plt.style.use('fivethirtyeight')
 
     plt.plot([0,control_max], [0,control_max], 'k--')
     plt.scatter(aggregate['predicted'], aggregate['actual'])

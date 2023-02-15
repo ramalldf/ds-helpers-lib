@@ -8,12 +8,11 @@ from sklearn.metrics import auc, brier_score_loss
 def plot_pairs(input_df, target_col, grid_col_num):
     '''Use Seaborn to plot the relationships between feat cols against one
     target column. Define number of columns in plot grid with grid_col_num'''
-    
+        
     # Define dimensions of grid
     feat_cols_only = input_df.drop(target_col, axis=1).columns
     n_cols = grid_col_num
     n_rows = len(feat_cols_only)//n_cols
-    print(len(feat_cols_only), n_rows)
     
     # Split feats list into sublists to match grid dimensions
     splits = np.array_split(feat_cols_only, n_rows)
@@ -21,7 +20,8 @@ def plot_pairs(input_df, target_col, grid_col_num):
     
     # Plot pair based on these target and sublists of features
     for i in splits:
-        sns.pairplot(input_df, y_vars=target_col, x_vars=i)
+        sns.pairplot(input_df, y_vars=target_col, x_vars=i, 
+                     plot_kws=dict(alpha=0.4, edgecolor=None))
     
 
 
@@ -29,7 +29,6 @@ def scatter_boxplot(my_df, xlabels, ylabels, title, fig_size= [10,6]):
     '''Style formatting for boxplots'''
 
     plt.subplots(1,1, figsize=fig_size, facecolor='white')
-    plt.style.use('fivethirtyeight')
     sns.boxplot(data=my_df, saturation= 0.2)
     sns.stripplot(data=my_df, jitter=True, size= 8.5, linewidth= 1, edgecolor= 'black')
     plt.xlabel(xlabels, fontsize=20, fontweight='bold')
@@ -64,7 +63,6 @@ def plot_cumulative_gains(actual, prob_pred, return_plot_table=False):
     print('Error rate (1 - (AUC pred / AUC optimal)): ', error_rate)
 
     plt.subplots(1,1, figsize=[10, 6], facecolor='white')
-    plt.style.use('fivethirtyeight')
     plt.plot([1,len(actual)],[0, sum(actual)], 'k--')
     plt.plot(temp['rank'].values, temp['cumsum_optimal'])
     plt.plot(temp['rank'].values, temp['cumsum_pred'])
@@ -104,7 +102,6 @@ def plot_calibration_curve(actual, prob_pred, n_quantiles=10, fixed_axes_limits=
 
     # Plot
     plt.subplots(1,1, figsize=[10, 6], facecolor='white')
-    plt.style.use('fivethirtyeight')
 
     plt.plot([0,control_max], [0,control_max], 'k--')
     plt.scatter(aggregate['predicted'], aggregate['actual'])

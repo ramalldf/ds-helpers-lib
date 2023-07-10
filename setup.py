@@ -15,7 +15,7 @@ setup(
                       "pytest==7.2.0",
                       "scikit-learn",
                       "seaborn",
-                      "skimage"],
+                      "scikit-image"],
     include_package_data=True,
     package_data={'': ['data/*.csv']}
 )
